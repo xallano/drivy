@@ -68,10 +68,10 @@ export default class Presentation extends React.Component {
           <Slide transition={["slide"]} bgColor="primary">
             <Heading size={2} lineHeight={1} textColor="white">
               6 exercises to do with JavaScript
-            </Heading>
-            <Link href="https://github.com/92bondstreet/drivy" lineHeight={2} textColor="white">
+						</Heading>
+            <Heading size={4} lineHeight={2} textColor="white">
               92bondstreet/drivy
-            </Link>
+            </Heading>
           </Slide>
           <Slide transition={["slide"]} bgColor="primary">
             <Heading size={1} lineHeight={1} textColor="white">
