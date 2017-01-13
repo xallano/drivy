@@ -54,7 +54,7 @@ var rentals = [{
   'options': {
     'deductibleReduction': true
   },
-  'price': 0,
+  'price': RentalPrice('2016-01-05', '2016-01-09',60,0.30, 300),
   'commission': {
     'insurance': 0,
     'assistance': 0,
@@ -73,7 +73,7 @@ var rentals = [{
   'options': {
     'deductibleReduction': true
   },
-  'price': 0,
+  'price': RentalPrice('2016-01-05', '2016-01-09',100,0.45, 1000),
   'commission': {
     'insurance': 0,
     'assistance': 0,
@@ -92,99 +92,18 @@ function DateDiff(pickupDate,returnDate){
   else return diffDays;
 }
 
-
+function DecreasePrincing(pickupDate,returnDate){
+  if(DateDiff(pickupDate,returnDate)>10)
+    return 0.5;
+  if(DateDiff(pickupDate,returnDate)>4)
+    return 0.3;
+  if(DateDiff(pickupDate,returnDate)>1)
+    return 0.1;
+  else return 1;
+}
  
 function RentalPrice(pickupDate, returnDate,pricePerDay,pricePerKm, distance){
 
-return DateDiff(pickupDate,returnDate)*pricePerDay + pricePerKm*distance;
+return DateDiff(pickupDate,returnDate)*pricePerDay*DecreasePrincing(pickupDate,returnDate) + pricePerKm*distance;
 
 }
-
-//list of actors for payment
-//useful from exercise 5
-var actors = [{
-  'rentalId': '1-pb-92',
-  'payment': [{
-    'who': 'driver',
-    'type': 'debit',
-    'amount': 0
-  }, {
-    'who': 'owner',
-    'type': 'credit',
-    'amount': 0
-  }, {
-    'who': 'insurance',
-    'type': 'credit',
-    'amount': 0
-  }, {
-    'who': 'assistance',
-    'type': 'credit',
-    'amount': 0
-  }, {
-    'who': 'drivy',
-    'type': 'credit',
-    'amount': 0
-  }]
-}, {
-  'rentalId': '2-rs-92',
-  'payment': [{
-    'who': 'driver',
-    'type': 'debit',
-    'amount': 0
-  }, {
-    'who': 'owner',
-    'type': 'credit',
-    'amount': 0
-  }, {
-    'who': 'insurance',
-    'type': 'credit',
-    'amount': 0
-  }, {
-    'who': 'assistance',
-    'type': 'credit',
-    'amount': 0
-  }, {
-    'who': 'drivy',
-    'type': 'credit',
-    'amount': 0
-  }]
-}, {
-  'rentalId': '3-sa-92',
-  'payment': [{
-    'who': 'driver',
-    'type': 'debit',
-    'amount': 0
-  }, {
-    'who': 'owner',
-    'type': 'credit',
-    'amount': 0
-  }, {
-    'who': 'insurance',
-    'type': 'credit',
-    'amount': 0
-  }, {
-    'who': 'assistance',
-    'type': 'credit',
-    'amount': 0
-  }, {
-    'who': 'drivy',
-    'type': 'credit',
-    'amount': 0
-  }]
-}];
-
-//list of rental modifcation
-//useful for exercise 6
-var rentalModifications = [{
-  'rentalId': '1-pb-92',
-  'returnDate': '2016-01-04',
-  'distance': 150
-}, {
-  'rentalId': '3-sa-92',
-  'pickupDate': '2015-12-05'
-}];
-
-console.log(cars);
-console.log(rentals);
-console.log(actors);
-console.log(rentalModifications);
