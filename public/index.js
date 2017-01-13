@@ -35,7 +35,7 @@ var rentals = [{
   'options': {
     'deductibleReduction': false
   },
-  'price': 0,
+  'price': RentalPrice('2016-01-02', '2016-01-02',20,0.10, 100),
   'commission': {
     'insurance': 0,
     'assistance': 0,
@@ -80,6 +80,25 @@ var rentals = [{
     'drivy': 0
   }
 }];
+
+function DateDiff(pickupDate,returnDate){
+  var date1 = new Date(pickupDate);
+  var date2 = new Date(returnDate)
+  var timeDiff = date2 - date1;
+
+  var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24)); 
+  if(diffDays==0)
+    return 1;
+  else return diffDays;
+}
+
+
+ 
+function RentalPrice(pickupDate, returnDate,pricePerDay,pricePerKm, distance){
+
+return DateDiff(pickupDate,returnDate)*pricePerDay + pricePerKm*distance;
+
+}
 
 //list of actors for payment
 //useful from exercise 5
