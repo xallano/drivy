@@ -35,7 +35,7 @@ var rentals = [{
   'options': {
     'deductibleReduction': false
   },
-  'price': RentalPrice('2016-01-02', '2016-01-02',20,0.10, 100),
+  'price': RentalPrice('2016-01-02', '2016-01-02',20,0.10, 100,false),
   'commission': {
     'insurance': 0,
     'assistance': 0,
@@ -54,7 +54,7 @@ var rentals = [{
   'options': {
     'deductibleReduction': true
   },
-  'price': RentalPrice('2016-01-05', '2016-01-09',60,0.30, 300),
+  'price': RentalPrice('2016-01-05', '2016-01-09',60,0.30, 300,true),
   'commission': {
     'insurance': 0,
     'assistance': 0,
@@ -73,7 +73,7 @@ var rentals = [{
   'options': {
     'deductibleReduction': true
   },
-  'price': RentalPrice('2016-01-05', '2016-01-09',100,0.45, 1000),
+  'price': RentalPrice('2016-01-05', '2016-01-09',100,0.45, 1000,true),
   'commission': {
     'insurance': 0,
     'assistance': 0,
@@ -102,9 +102,10 @@ function DecreasePrincing(pickupDate,returnDate){
   else return 1;
 }
 
-function RentalPrice(pickupDate, returnDate,pricePerDay,pricePerKm, distance){
-
-return DateDiff(pickupDate,returnDate)*pricePerDay*DecreasePrincing(pickupDate,returnDate) + pricePerKm*distance;
+function RentalPrice(pickupDate, returnDate,pricePerDay,pricePerKm, distance,deductibleReduction){
+if(deductibleReduction==true)
+  return DateDiff(pickupDate,returnDate)*pricePerDay*DecreasePrincing(pickupDate,returnDate) + pricePerKm*distance + deductible_option(pickupDate,returnDate);
+else return DateDiff(pickupDate,returnDate)*pricePerDay*DecreasePrincing(pickupDate,returnDate) + pricePerKm*distance;
 
 }
 
@@ -118,6 +119,10 @@ return 0.15*RentalPrice;
 
 function DrivyCommission(RentalPrice,pickupDate,returnDate){
   return RentalPrice*0.3-InsuranceCommission(RentalPrice)-DateDiff(pickupDate,returnDate);
+}
+
+function deductible_option(pickupDate,returnDate){
+  return DateDiff(pickupDate,returnDate)*4;
 }
 
 //list of actors for payment
